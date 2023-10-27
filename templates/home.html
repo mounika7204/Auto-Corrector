@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling and Grammar Correction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<style>
+    body{
+        background-color: #7b98c7;
+        background-image: url('images\1.png');
+        background-size: cover; /* Adjust as needed */
+        background-repeat: no-repeat;
+    }        
+    /* }#97bbf4 */
+  #original_text {
+        width: 70%; /* Set the desired width */
+        margin: 0 auto; /* Center horizontally */
+        height: 350px; /* Set the desired height */
+        margin-top: 12vh;
+        border: 1px solid #ccc; /* Add a border */
+        padding: 10px; /* Add padding for text input */
+        border-radius: 5px; /* Add rounded corners */
+        background-color: #f5f5f5; /* Set background color */
+        box-shadow: 5px 5px 5px #888; /* Add a subtle shadow */
+    }
+        .btn {
+            background-color: #2f3237;
+            margin-left: 800px;
+            color: white;
+        }
+        .btn:hover{
+            color:white;
+        }
+        #corrected_text{
+        width: 70%; /* Set the desired width */
+        margin-left: 170px;
+        border: 1px solid #ccc; /* Add a border */
+        padding: 10px; /* Add padding for text input */
+        border-radius: 5px; /* Add rounded corners */
+        background-color: #f5f5f5; /* Set background color */
+        box-shadow: 5px 5px 5px #888; /* Add a subtle shadow */
+        }
+        #list{
+            margin-left: 170px;
+            font-size: 25px;
+            font:bold;
+            margin-left: 170px;
+            border: 1px solid #ccc; /* Add a border */
+            padding: 10px; /* Add padding for text input */
+            border-radius: 5px; /* Add rounded corners */
+            background-color: #f5f5f5; /* Set background color */
+            box-shadow: 5px 5px 5px #888; /* Add a subtle shadow*/
+             overflow: scroll;
+             width: 70%;
+             height: 30vh;
+        }
+        .text-center{
+            margin-left: 70px;
+            font-size: 25px;
+        }
+        #piechart {
+    margin: 0 auto; /* Center horizontally */
+    text-align: center; /* Center the contents */
+    margin-top: 20px; /* Adjust the vertical position as needed */
+}   
+    .heading{
+        text-align: center;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <!-- <div class="heading"> -->
+            <h2 class="heading">Write.Correct.Rephrase</h2>
+        <!-- </div> -->
+            <form method="POST" action="/home">
+                <div class="form-group">
+                    <label for="original_text"></label>
+                    <textarea id="original_text" name="original_text" rows="5" class="form-control" placeholder="Enter your text here..."></textarea>                
+                </div>
+
+                <button type="submit" class="btn">CORRECT</button>
+            </form>
+
+        {% if corrected_text %}
+        <div class="mt-5">
+            <h4 class="text-center">Corrected Text</h4>
+            <textarea id="corrected_text" rows="4" cols="50">{{ corrected_text }}</textarea>
+        </div>
+        <div class="mt-5">
+            <h2 class="text-center">Spelling Mistakes</h2>
+            <ul id="list">
+                {% for mistake in spelling_mistakes %}
+                    <li>{{ mistake[0] }} -&gt; {{ mistake[1] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="mt-5">
+            <h2 class="text-center">Grammar Mistakes</h2>
+            <ul id = list>
+                {% for mistake in grammar_mistakes %}
+                    <li>{{ mistake.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if score is not none %}
+        <div class="mt-5">
+            <h2 class="text-center">Score</h2>
+            <p class="text-center" id="score">{{ score }}%</p>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="text-center">Correctness Chart</h2>
+            <canvas id="pieChart" width="300" height="300" style="margin: 0 auto; display: block; text-align: center; margin-top: 20px;"></canvas>
+        </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <div id ="piechart">
+        <script>
+            var score = {{ score }};
+            var incorrectPercentage = 100 - score;
+
+            var pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+
+            var pieChart = new Chart(pieChartCanvas, {
+                type: 'pie',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        data: [score, incorrectPercentage],
+                        backgroundColor: ['#28A745', '#DC3545'], // Green for correct, Red for incorrect
+                    }],
+                },
+                options: {
+                    responsive: false,
+    
+                },
+            });
+        </script>
+        </div>
+ 
+
+        {% endif %}
+    </div>
+</body>
+</html>

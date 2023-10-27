@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the Auto Correction Tool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            overflow: scroll;
+        }
+        .background-container {
+            background-color: #2f3237;
+            height: 70vh;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .text {
+            color: white;
+        }
+        .text-area-container {
+            width: 50%;
+            background-color: transparent;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .textarea {
+            padding-top : 10%;
+            width: 50%;
+            height: 60vh;
+        }
+        .video{
+            width: 1px;
+            height: 70px;
+            margin-left: 0px;
+            margin-right: 950px;
+            /* transform: perspective(1000px) rotateY(20deg); */
+    
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="container text-area-container">
+            <h1 class="text">Welcome to the Auto Correction Tool</h1>
+            <form method="POST" action="/">
+                <button type="submit" class="btn btn-primary">Get Started</button>
+            </form>
+        </div>
+        <div class="video">
+        <video muted loop autoplay playsinline class>
+            <source data-src="https://languagetool.org/videos/editor.mp4" type="video/mp4" src="https://languagetool.org/videos/editor.mp4">
+        </video>
+        </div>
+    </div>
+</body>
+</html>
